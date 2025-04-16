@@ -12,13 +12,13 @@ class Customer
     int id;
     std::string firstName;
     std::string secondName;
-    short cardNum;
-    short accountNum;
+    int cardNum;
+    int accountNum;
     double balance;
     Customers& owner;
     friend Customers;
 protected:
-    Customer(std::string firstName, std::string secondName, short cardNum, short accountNum, double balance, Customers& owner, Logger& logger);
+    Customer(std::string firstName, std::string secondName, int cardNum, int accountNum, double balance, Customers& owner, Logger& logger);
     void remove(Logger& logger);
 public:
     Customer(Customer& right);
@@ -35,8 +35,8 @@ public:
     std::string getSecondName();
     std::string getFirstName();
     double getBalance();
-    short getCardNum();
-    short getAccountNum();
+    int getCardNum();
+    int getAccountNum();
     int getID();
 
     QString toString() const;

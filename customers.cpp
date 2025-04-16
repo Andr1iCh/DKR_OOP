@@ -44,7 +44,7 @@ Customers& Customers::operator=(Customers& right) {
 }
 
 void Customers::createCustomer(std::string firstName, std::string secondName,
-                               short cardNum, short accountNum, double balance, Logger& logger)
+                               int cardNum, int accountNum, double balance, Logger& logger)
 {
     Customer* c = new Customer(firstName, secondName, cardNum, accountNum, balance, *this, logger);
     c->id = nextID++;
@@ -95,12 +95,12 @@ void Customers::setCustomerBalance(int id, double newBalance, Logger& logger) {
     if (c) c->setBalance(newBalance, logger);
 }
 
-void Customers::setCustomerCardNum(int id, short newCardNum, Logger& logger) {
+void Customers::setCustomerCardNum(int id, int newCardNum, Logger& logger) {
     Customer* c = getByID(id);
     if (c) c->setCardNum(std::to_string(newCardNum), logger);
 }
 
-void Customers::setCustomerAccountNum(int id, short newAccountNum, Logger& logger) {
+void Customers::setCustomerAccountNum(int id, int newAccountNum, Logger& logger) {
     Customer* c = getByID(id);
     if (c) c->setAccountNum(std::to_string(newAccountNum), logger);
 }
@@ -180,8 +180,8 @@ void Customers::loadDecrypted(const std::string& filename, Logger& logger) {
             std::getline(ls, accStr, ';') &&
             std::getline(ls, balStr, ';')) {
 
-            short card = static_cast<short>(std::stoi(cardStr));
-            short acc = static_cast<short>(std::stoi(accStr));
+            int card = static_cast<int>(std::stoi(cardStr));
+            int acc = static_cast<int>(std::stoi(accStr));
             double bal = std::stod(balStr);
 
             this->createCustomer(fname, sname, card, acc, bal, logger);

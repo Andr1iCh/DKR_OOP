@@ -46,7 +46,7 @@ std::vector<Customer*> Searcher::searchSecondNameStartsWith(char letter) {
     return result;
 }
 
-std::vector<Customer*> Searcher::searchByCardNum(short min, short max) {
+std::vector<Customer*> Searcher::searchByCardNum(int min, int max) {
     std::vector<Customer*> result;
     if (max == -1) {
         for (Customer* c : data.getAll()) {
@@ -55,7 +55,7 @@ std::vector<Customer*> Searcher::searchByCardNum(short min, short max) {
         }
     } else {
         for (Customer* c : data.getAll()) {
-            short val = c->getCardNum();
+            int val = c->getCardNum();
             if (val >= min && val <= max)
                 result.push_back(c);
         }
@@ -63,7 +63,7 @@ std::vector<Customer*> Searcher::searchByCardNum(short min, short max) {
     return result;
 }
 
-std::vector<Customer*> Searcher::searchByAccountNum(short min, short max) {
+std::vector<Customer*> Searcher::searchByAccountNum(int min, int max) {
     std::vector<Customer*> result;
     if (max == -1) {
         for (Customer* c : data.getAll()) {
@@ -72,7 +72,7 @@ std::vector<Customer*> Searcher::searchByAccountNum(short min, short max) {
         }
     } else {
         for (Customer* c : data.getAll()) {
-            short val = c->getAccountNum();
+            int val = c->getAccountNum();
             if (val >= min && val <= max)
                 result.push_back(c);
         }

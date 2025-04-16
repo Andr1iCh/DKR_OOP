@@ -3,7 +3,7 @@
 #include "logger.h"
 #include <iostream>
 
-Customer::Customer(std::string firstName, std::string secondName, short cardNum, short accountNum, double balance, Customers& owner, Logger& logger):
+Customer::Customer(std::string firstName, std::string secondName, int cardNum, int accountNum, double balance, Customers& owner, Logger& logger):
     firstName(std::move(firstName)),
     secondName(std::move(secondName)),
     cardNum(cardNum),
@@ -62,13 +62,13 @@ void Customer::setBalance(double newBalance, Logger& logger) {
 }
 
 void Customer::setCardNum(std::string newCardNumStr, Logger& logger) {
-    short newCardNum = std::stoi(newCardNumStr);
+    int newCardNum = std::stoi(newCardNumStr);
     logger.log("Changed card number of ID " + std::to_string(id) + " from " + std::to_string(cardNum) + " to " + newCardNumStr);
     cardNum = newCardNum;
 }
 
 void Customer::setAccountNum(std::string newAccountNumStr, Logger& logger) {
-    short newAccountNum = std::stoi(newAccountNumStr);
+    int newAccountNum = std::stoi(newAccountNumStr);
     logger.log("Changed account number of ID " + std::to_string(id) + " from " + std::to_string(accountNum) + " to " + newAccountNumStr);
     accountNum = newAccountNum;
 }
@@ -86,11 +86,11 @@ double Customer::getBalance() {
     return balance;
 }
 
-short Customer::getCardNum() {
+int Customer::getCardNum() {
     return cardNum;
 }
 
-short Customer::getAccountNum() {
+int Customer::getAccountNum() {
     return accountNum;
 }
 int Customer::getID() {
