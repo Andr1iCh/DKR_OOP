@@ -9,17 +9,38 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-msse4.2 -maes -mpclmul -mavx -mavx2 -msha)
+endif()
+option(CRYPTOPP_BUILD_TESTING OFF)
+option(CRYPTOPP_DISABLE_ASM OFF)
+option(CRYPTOPP_DISABLE_SSE3 OFF)
+option(CRYPTOPP_DISABLE_SSSE3 OFF)
+option(CRYPTOPP_DISABLE_SSE4 OFF)
+option(CRYPTOPP_DISABLE_CLMUL OFF)
+option(CRYPTOPP_DISABLE_AESNI OFF)
+option(CRYPTOPP_DISABLE_AVX OFF)
+option(CRYPTOPP_DISABLE_AVX2 OFF)
+option(CRYPTOPP_DISABLE_SHANI OFF)
+set(CRYPTOPP_BUILD_SOURCES_DIR "${CMAKE_SOURCE_DIR}/lib/cryptopp-cmake/cryptopp")
+set(CRYPTOPP_DISABLE_ASM ON  CACHE BOOL "No ASM for MinGW‑64" FORCE)
+add_subdirectory(lib/cryptopp-cmake/cryptopp)                            #
+
+
+include_directories(${CMAKE_SOURCE_DIR}/cryptopp)  #
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
 set(TS_FILES DKR_en_150.ts)
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
-        ${TS_FILES}
+    main.cpp
+    mainwindow.cpp
+    mainwindow.h
+    mainwindow.ui
+    lib/cryptopp-cmake/cryptopp/cpu.cpp
+    ${TS_FILES}
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -31,21 +52,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         customers.h customers.cpp
         sorter.h sorter.cpp
         searcher.h searcher.cpp
-
     )
-  set(CRYPTOPP_SRC "${CMAKE_BINARY_DIR}/lib/cryptopp")
-  file(GLOB CRYPTOPP_SOURCES "${CRYPTOPP_SRC}/*.cpp")
-  add_definitions(-DCRYPTOPP_DISABLE_ASM)
-  add_library(cryptopp STATIC ${CRYPTOPP_SOURCES})
-  target_include_directories(cryptopp PUBLIC ${CRYPTOPP_SRC})
 
-
-  target_link_libraries(DKR PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-  target_link_libraries(DKR PRIVATE cryptopp)
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET DKR APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+    target_link_libraries(DKR PRIVATE Qt6::Widgets cryptopp::cryptopp)   #
 
     qt_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 else()
@@ -53,22 +62,22 @@ else()
         add_library(DKR SHARED
             ${PROJECT_SOURCES}
         )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
     else()
         add_executable(DKR
             ${PROJECT_SOURCES}
         )
     endif()
 
+    # ⬅️ додано лінкування з cryptopp у гілці Qt5
+    target_link_libraries(DKR PRIVATE Qt${QT_VERSION_MAJOR}::Widgets cryptopp::cryptopp)   # ⬅️ додано
+
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(DKR PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+# ❌ Замість цього виклику, ми тепер додаємо target_link_libraries в обох гілках умов
+# target_link_libraries(DKR PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
   set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.DKR)
 endif()

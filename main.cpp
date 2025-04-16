@@ -1,8 +1,11 @@
 #include "mainwindow.h"
+#include <filesystem>
 
 #include "logger.h"
 #include "customer.h"
 #include "customers.h"
+#include "sorter.h"
+#include "searcher.h"
 
 #include <QApplication>
 #include <QLocale>
@@ -10,20 +13,56 @@
 
 int main(int argc, char *argv[])
 {
-    qDebug() << "ddd";
-    Logger logger("log.txt");
-    Customers allCustomers(logger);
-    std::string path = "customers_encrypted.aes";
+    Logger logger("test_log.txt");
+    Customers group(logger);
+    group.createCustomer("John", "Smith", 1111, 2222, 500.50, logger);   // ID 1
+    group.createCustomer("Alice", "Brown", 3333, 4444, 1000.00, logger); // ID 2
+    group.createCustomer("Bob", "Adams", 5555, 6666, 750.25, logger);    // ID 3
+    group.createCustomer("Carl", "Smith", 7777, 8888, 200.00, logger);   // ID 4
 
-    allCustomers.createCustomer("Andrii","C", 4441, 42213, 99999999, logger);
-    allCustomers.createCustomer("Roma","C", 1223, 31232, 13211223, logger);
-    allCustomers.createCustomer("Olex","C", 2334, 13223, 244444, logger);
-    allCustomers.createCustomer("Dmitro","C", 3344, 45422, 12, logger);
-    allCustomers.createCustomer("Stepan","C", 3344, 12434, 41223, logger);
-    qDebug() << allCustomers.getAllCustomersInfo();
+    qDebug().noquote() << "Original list:";
+    qDebug().noquote() << group;
+
+    Searcher search(group);
+
+    qDebug().noquote() << "\nSearch by ID (3):";
+    for (auto* c : search.searchByID(3)) qDebug().noquote() << *c;
+
+    qDebug().noquote() << "\nSearch by balance (500-800):";
+    for (auto* c : search.searchByBalance(500, 800)) qDebug().noquote() << *c;
+
+    qDebug().noquote() << "\nSearch by first name starts with 'A':";
+    for (auto* c : search.searchFirstNameStartsWith('A')) qDebug().noquote() << *c;
+
+    qDebug().noquote() << "\nSearch by second name starts with 'S':";
+    for (auto* c : search.searchSecondNameStartsWith('S')) qDebug().noquote() << *c;
+
+    qDebug().noquote() << "\nSearch by card number (3333):";
+    for (auto* c : search.searchByCardNum(3333, -1)) qDebug().noquote() << *c;
+
+    auto all = group.getAll();
+
+    Sorter::_sortByBalance(all, false);
+    qDebug().noquote() << "\nSorted by balance descending:";
+    for (auto* c : all) qDebug().noquote() << *c;
+
+    Sorter::_sortFirstNameByAlphabet(all, true);
+    qDebug().noquote() << "\nSorted by first name ascending:\n" << all;
+
+
+    Sorter::_sortByID(all, true);
+    qDebug().noquote() << "\nSorted by ID ascending (original order):";
+    for (auto* c : all) qDebug().noquote() << *c;
+
+    // Test encryption/decryption
+    group.saveEncrypted("customers.enc", logger);
+    Customers loadedGroup(logger);
+    loadedGroup.loadDecrypted("customers.enc", logger);
+
+    qDebug().noquote() << "\nLoaded from encrypted file:";
+    qDebug().noquote() << loadedGroup;
 
     QApplication a(argc, argv);
-
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
     for (const QString &locale : uiLanguages) {

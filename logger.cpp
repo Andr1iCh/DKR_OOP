@@ -1,7 +1,9 @@
 #include "logger.h"
+#include <filesystem>
 
 Logger::Logger(const std::string& path) {
-    file.open(path, std::ios::app);
+    std::filesystem::create_directory("temp");
+    file.open("temp/" + path, std::ios::app);
 }
 
 void Logger::log(const std::string& msg) {

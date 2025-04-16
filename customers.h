@@ -43,4 +43,5 @@ public:
     void loadDecrypted(const std::string& filename, Logger& logger);
 };
 
+QDebug operator<<(QDebug debug, const std::vector<Customer*>& vec);
 #endif // CUSTOMERS_H

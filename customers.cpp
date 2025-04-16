@@ -2,11 +2,12 @@
 #include "customer.h"
 #include "logger.h"
 
-#include <aes.h>
-#include <modes.h>
-#include <files.h>
-#include <filters.h>
-#include <osrng.h>
+#include "aes.h"
+#include "modes.h"
+#include "files.h"
+#include "filters.h"
+#include "osrng.h"
+#include <filesystem>
 #include <sstream>
 
 QDebug operator<<(QDebug, const Customer&);
@@ -132,8 +133,18 @@ QDebug operator<<(QDebug debug, const Customers& group) {
         debug << *c << "\n";
     return debug;
 }
+QDebug operator<<(QDebug debug, const std::vector<Customer*>& vec) {
+    QDebugStateSaver saver(debug);
+    debug.nospace();
+    for (const Customer* c : vec) {
+        debug << *c << "\n";
+    }
+    return debug;
+}
 
 void Customers::saveEncrypted(const std::string& filename, Logger& logger) {
+    std::filesystem::create_directory("temp");
+
     std::string data;
     for (Customer* c : customers) {
         data += c->serialize() + "\n";
@@ -145,13 +156,15 @@ void Customers::saveEncrypted(const std::string& filename, Logger& logger) {
     CryptoPP::CBC_Mode<CryptoPP::AES>::Encryption enc;
     enc.SetKeyWithIV(key, sizeof(key), iv);
 
-    CryptoPP::FileSink sink(filename.c_str());
+    std::string fullPath = "temp/" + filename;
+    CryptoPP::FileSink sink(fullPath.c_str());
     CryptoPP::StreamTransformationFilter encryptor(enc, new CryptoPP::Redirector(sink));
     encryptor.Put(reinterpret_cast<const CryptoPP::byte*>(data.data()), data.size());
     encryptor.MessageEnd();
 
-    logger.log("Customer data encrypted and saved to file: " + filename);
+    logger.log("Customer data encrypted and saved to file: " + fullPath);
 }
+
 
 void Customers::loadDecrypted(const std::string& filename, Logger& logger) {
     std::string decrypted;
@@ -161,11 +174,7 @@ void Customers::loadDecrypted(const std::string& filename, Logger& logger) {
     CryptoPP::CBC_Mode<CryptoPP::AES>::Decryption dec;
     dec.SetKeyWithIV(key, sizeof(key), iv);
 
-    CryptoPP::FileSource fs(filename.c_str(), true,
-                            new CryptoPP::StreamTransformationFilter(dec,
-                                                                     new CryptoPP::StringSink(decrypted)
-                                                                     )
-                            );
+    CryptoPP::FileSource fs(("temp/"+filename).c_str(), true, new CryptoPP::StreamTransformationFilter(dec, new CryptoPP::StringSink(decrypted)));
 
     std::istringstream iss(decrypted);
     std::string line;

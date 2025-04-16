@@ -43,6 +43,8 @@ public:
 
     std::string serialize();
 
+
 };
 
+QDebug operator<<(QDebug, const Customer&);
 #endif // CUSTOMER_H

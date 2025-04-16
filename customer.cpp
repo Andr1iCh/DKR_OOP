@@ -11,7 +11,6 @@ Customer::Customer(std::string firstName, std::string secondName, int cardNum, i
     balance(balance),
     owner(owner)
 {
-    logger.log("Customer created: ID=" + std::to_string(id));
 }
 
 
