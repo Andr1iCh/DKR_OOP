@@ -44,11 +44,6 @@ Customer::~Customer() {
 
 }
 
-void Customer::showCust() {
-    std::cout << "ID: " << id << ", " << secondName << " " << firstName
-              << ", Card: " << cardNum << ", Account: " << accountNum
-              << ", Balance: $" << balance << "\n";
-}
 
 //Setters
 void Customer::setSecondName(std::string newSName, Logger& logger) {
@@ -100,6 +95,22 @@ short Customer::getAccountNum() {
 }
 int Customer::getID() {
     return id;
+}
+
+QString Customer::toString() const {
+    return QString("ID: %1 | %2 %3 | Card: %4 | Account: %5 | Balance: %6")
+    .arg(id)
+        .arg(QString::fromStdString(secondName))
+        .arg(QString::fromStdString(firstName))
+        .arg(cardNum)
+        .arg(accountNum)
+        .arg(balance);
+}
+
+QDebug operator<<(QDebug debug, const Customer& c) {
+    QDebugStateSaver saver(debug);
+    debug.nospace() << c.toString();
+    return debug;
 }
 
 

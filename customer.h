@@ -1,6 +1,8 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 #include <string>
+#include <QString>
+#include <QDebug>
 
 class Logger;
 class Customers;
@@ -23,7 +25,6 @@ public:
     Customer& operator=(const Customer& other);
     ~Customer();
 
-    void showCust();
     void setSecondName(std::string newSName, Logger& logger);
     void setFirstName(std::string newFName, Logger& logger);
     void setBalance(double newBalance, Logger& logger);
@@ -38,6 +39,7 @@ public:
     short getAccountNum();
     int getID();
 
+    QString toString() const;
 };
 
 #endif // CUSTOMER_H

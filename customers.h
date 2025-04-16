@@ -2,6 +2,8 @@
 #define CUSTOMERS_H
 #include <vector>
 #include <string>
+#include <QString>
+#include <QDebug>
 class Logger;
 class Customer;
 
@@ -25,7 +27,7 @@ public:
     void setCustomerCardNum(int id, short newCardNum, Logger& logger);
     void setCustomerAccountNum(int id, short newAccountNum, Logger& logger);
 
-    Customer* getByID(int id);
+    Customer* getByID(int id)const;
     std::vector<Customer*> getAll();
 
     void copyDataByID(int id1, int id2);
@@ -33,6 +35,10 @@ public:
 
     void add(Customer* pCust);
     int generateID();
+
+    QString getCustomerInfoByID(int id) const;
+    QString getAllCustomersInfo() const;
+    friend QDebug operator<<(QDebug debug, const Customers& group);
 };
 
 #endif // CUSTOMERS_H

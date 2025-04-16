@@ -1,6 +1,8 @@
 #include "customers.h"
 #include "customer.h"
 #include "logger.h"
+QDebug operator<<(QDebug, const Customer&);
+
 Customers::Customers(Logger& logger) {
     logger.log("Customers object created.");
 }
@@ -54,7 +56,7 @@ void Customers::removeByID(int id, Logger& logger) {
     logger.log("Customer ID = " + std::to_string(id) + " not found for deletion.");
 }
 
-Customer* Customers::getByID(int id) {
+Customer* Customers::getByID(int id)const {
     for (Customer* c : customers) {
         if (c->getID() == id)
             return c;
@@ -105,4 +107,24 @@ void Customers::copyDataByID(int id1, int id2) {
     if (from && to) {
         *to = *from;
     }
+}
+
+QString Customers::getCustomerInfoByID(int id) const {
+    Customer* c = getByID(id);
+    return c ? c->toString() : "Customer not found.";
+}
+
+QString Customers::getAllCustomersInfo() const {
+    QString result;
+    for (Customer* c : customers)
+        result += c->toString() + "\n";
+    return result;
+}
+
+QDebug operator<<(QDebug debug, const Customers& group) {
+    QDebugStateSaver saver(debug);
+    debug.nospace();
+    for (Customer* c : group.customers)
+        debug << *c << "\n";
+    return debug;
 }
