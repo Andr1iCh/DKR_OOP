@@ -113,4 +113,14 @@ QDebug operator<<(QDebug debug, const Customer& c) {
     return debug;
 }
 
+std::string Customer::serialize() {
+    return std::to_string(id) + ";" +
+           firstName + ";" +
+           secondName + ";" +
+           std::to_string(cardNum) + ";" +
+           std::to_string(accountNum) + ";" +
+           std::to_string(balance);
+}
+
+
 

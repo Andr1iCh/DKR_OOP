@@ -34,11 +34,13 @@ public:
     void removeByID(int id, Logger& logger);
 
     void add(Customer* pCust);
-    int generateID();
 
     QString getCustomerInfoByID(int id) const;
     QString getAllCustomersInfo() const;
     friend QDebug operator<<(QDebug debug, const Customers& group);
+
+    void saveEncrypted(const std::string& filename, Logger& logger);
+    void loadDecrypted(const std::string& filename, Logger& logger);
 };
 
 #endif // CUSTOMERS_H

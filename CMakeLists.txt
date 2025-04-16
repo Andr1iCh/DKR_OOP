@@ -31,6 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         customers.h customers.cpp
         sorter.h sorter.cpp
         searcher.h searcher.cpp
+
     )
   set(CRYPTOPP_SRC "${CMAKE_BINARY_DIR}/lib/cryptopp")
   file(GLOB CRYPTOPP_SOURCES "${CRYPTOPP_SRC}/*.cpp")

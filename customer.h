@@ -40,6 +40,9 @@ public:
     int getID();
 
     QString toString() const;
+
+    std::string serialize();
+
 };
 
 #endif // CUSTOMER_H
