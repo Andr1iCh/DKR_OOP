@@ -3,7 +3,7 @@
 #include "logger.h"
 #include <iostream>
 
-Customer::Customer(std::string firstName, std::string secondName, short cardNum, short accountNum, float balance, Customers& owner, Logger& logger):
+Customer::Customer(std::string firstName, std::string secondName, short cardNum, short accountNum, double balance, Customers& owner, Logger& logger):
     firstName(std::move(firstName)),
     secondName(std::move(secondName)),
     cardNum(cardNum),
@@ -61,7 +61,7 @@ void Customer::setFirstName(std::string newFName, Logger& logger) {
     firstName = newFName;
 }
 
-void Customer::setBalance(float newBalance, Logger& logger) {
+void Customer::setBalance(double newBalance, Logger& logger) {
     logger.log("Changed balance of ID " + std::to_string(id) + " from " + std::to_string(balance) + " to " + std::to_string(newBalance));
     balance = newBalance;
 }
@@ -87,7 +87,7 @@ std::string Customer::getFirstName() {
     return firstName;
 }
 
-float Customer::getBalance() {
+double Customer::getBalance() {
     return balance;
 }
 

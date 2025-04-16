@@ -34,10 +34,10 @@ Customers& Customers::operator=(Customers& right) {
 }
 
 void Customers::createCustomer(std::string firstName, std::string secondName,
-                               short cardNum, short accountNum, float balance, Logger& logger)
+                               short cardNum, short accountNum, double balance, Logger& logger)
 {
     Customer* c = new Customer(firstName, secondName, cardNum, accountNum, balance, *this, logger);
-    c->id = nextID++; // або зробити це в середині Customer, якщо хочеш повністю інкапсулювати
+    c->id = nextID++;
     customers.push_back(c);
     logger.log("Customer created: ID = " + std::to_string(c->getID()));
 }
@@ -84,7 +84,7 @@ void Customers::setCustomerSecondName(int id, std::string newName, Logger& logge
     if (c) c->setSecondName(newName, logger);
 }
 
-void Customers::setCustomerBalance(int id, float newBalance, Logger& logger) {
+void Customers::setCustomerBalance(int id, double newBalance, Logger& logger) {
     Customer* c = getByID(id);
     if (c) c->setBalance(newBalance, logger);
 }

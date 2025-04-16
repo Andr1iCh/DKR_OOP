@@ -17,11 +17,11 @@ public:
 
     Customers& operator=(Customers& right);
 
-    void createCustomer(std::string firstName, std::string secondName,short cardNum, short accountNum, float balance, Logger& logger);
+    void createCustomer(std::string firstName, std::string secondName,short cardNum, short accountNum, double balance, Logger& logger);
 
     void setCustomerFirstName(int id, std::string newName, Logger& logger);
     void setCustomerSecondName(int id, std::string newName, Logger& logger);
-    void setCustomerBalance(int id, float newBalance, Logger& logger);
+    void setCustomerBalance(int id, double newBalance, Logger& logger);
     void setCustomerCardNum(int id, short newCardNum, Logger& logger);
     void setCustomerAccountNum(int id, short newAccountNum, Logger& logger);
 
