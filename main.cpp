@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include <filesystem>
 
 #include "logger.h"
 #include "customer.h"
@@ -57,6 +56,7 @@ int main(int argc, char *argv[])
     // Test encryption/decryption
     group.saveEncrypted("customers.enc", logger);
     Customers loadedGroup(logger);
+    qDebug().noquote() << "\nFile is encrypted";
     loadedGroup.loadDecrypted("customers.enc", logger);
 
     qDebug().noquote() << "\nLoaded from encrypted file:";

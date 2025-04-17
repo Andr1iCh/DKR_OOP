@@ -1,7 +1,5 @@
 #include "sorter.h"
 
-#include "Sorter.h"
-#include "Customer.h"
 #include <algorithm>
 
 void Sorter::_sortFirstNameByAlphabet(std::vector<Customer*>& arr, bool ascending) {

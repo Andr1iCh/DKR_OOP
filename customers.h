@@ -1,7 +1,7 @@
 #ifndef CUSTOMERS_H
 #define CUSTOMERS_H
 #include <vector>
-#include <string>
+//#include <string>
 #include <QString>
 #include <QDebug>
 class Logger;
@@ -19,10 +19,10 @@ public:
 
     Customers& operator=(Customers& right);
 
-    void createCustomer(std::string firstName, std::string secondName,int cardNum, int accountNum, double balance, Logger& logger);
+    void createCustomer(QString  firstName, QString  secondName,int cardNum, int accountNum, double balance, Logger& logger);
 
-    void setCustomerFirstName(int id, std::string newName, Logger& logger);
-    void setCustomerSecondName(int id, std::string newName, Logger& logger);
+    void setCustomerFirstName(int id, QString  newName, Logger& logger);
+    void setCustomerSecondName(int id, QString  newName, Logger& logger);
     void setCustomerBalance(int id, double newBalance, Logger& logger);
     void setCustomerCardNum(int id, int newCardNum, Logger& logger);
     void setCustomerAccountNum(int id, int newAccountNum, Logger& logger);
@@ -39,8 +39,8 @@ public:
     QString getAllCustomersInfo() const;
     friend QDebug operator<<(QDebug debug, const Customers& group);
 
-    void saveEncrypted(const std::string& filename, Logger& logger);
-    void loadDecrypted(const std::string& filename, Logger& logger);
+    void saveEncrypted(const QString & filename, Logger& logger);
+    void loadDecrypted(const QString & filename, Logger& logger);
 };
 
 QDebug operator<<(QDebug debug, const std::vector<Customer*>& vec);

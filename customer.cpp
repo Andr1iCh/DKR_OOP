@@ -1,9 +1,9 @@
 #include "customer.h"
 #include "customers.h"
 #include "logger.h"
-#include <iostream>
+//#include <iostream>
 
-Customer::Customer(std::string firstName, std::string secondName, int cardNum, int accountNum, double balance, Customers& owner, Logger& logger):
+Customer::Customer(QString  firstName, QString  secondName, int cardNum, int accountNum, double balance, Customers& owner, Logger& logger):
     firstName(std::move(firstName)),
     secondName(std::move(secondName)),
     cardNum(cardNum),
@@ -45,39 +45,45 @@ Customer::~Customer() {
 
 
 //Setters
-void Customer::setSecondName(std::string newSName, Logger& logger) {
-    logger.log("Changed second name of ID " + std::to_string(id) + " from " + secondName + " to " + newSName);
+void Customer::setSecondName(QString newSName, Logger& logger) {
+    logger.log(QString("Changed second name of ID %1 from %2 to %3")
+                   .arg(id).arg(secondName).arg(newSName));
     secondName = newSName;
 }
 
-void Customer::setFirstName(std::string newFName, Logger& logger) {
-    logger.log("Changed first name of ID " + std::to_string(id) + " from " + firstName + " to " + newFName);
+void Customer::setFirstName(QString newFName, Logger& logger) {
+    logger.log(QString("Changed first name of ID %1 from %2 to %3")
+                   .arg(id).arg(firstName).arg(newFName));
     firstName = newFName;
 }
 
 void Customer::setBalance(double newBalance, Logger& logger) {
-    logger.log("Changed balance of ID " + std::to_string(id) + " from " + std::to_string(balance) + " to " + std::to_string(newBalance));
+    logger.log(QString("Changed balance of ID %1 from %2 to %3")
+                   .arg(id).arg(balance).arg(newBalance));
     balance = newBalance;
 }
 
-void Customer::setCardNum(std::string newCardNumStr, Logger& logger) {
-    int newCardNum = std::stoi(newCardNumStr);
-    logger.log("Changed card number of ID " + std::to_string(id) + " from " + std::to_string(cardNum) + " to " + newCardNumStr);
+void Customer::setCardNum(QString newCardNumStr, Logger& logger) {
+    int newCardNum = newCardNumStr.toInt();
+    logger.log(QString("Changed card number of ID %1 from %2 to %3")
+                   .arg(id).arg(cardNum).arg(newCardNumStr));
     cardNum = newCardNum;
 }
 
-void Customer::setAccountNum(std::string newAccountNumStr, Logger& logger) {
-    int newAccountNum = std::stoi(newAccountNumStr);
-    logger.log("Changed account number of ID " + std::to_string(id) + " from " + std::to_string(accountNum) + " to " + newAccountNumStr);
+void Customer::setAccountNum(QString newAccountNumStr, Logger& logger) {
+    int newAccountNum = newAccountNumStr.toInt();
+    logger.log(QString("Changed account number of ID %1 from %2 to %3")
+                   .arg(id).arg(accountNum).arg(newAccountNumStr));
     accountNum = newAccountNum;
 }
 
+
 //Getters
-std::string Customer::getSecondName() {
+QString  Customer::getSecondName() {
     return secondName;
 }
 
-std::string Customer::getFirstName() {
+QString  Customer::getFirstName() {
     return firstName;
 }
 
@@ -98,13 +104,9 @@ int Customer::getID() {
 
 QString Customer::toString() const {
     return QString("ID: %1 | %2 %3 | Card: %4 | Account: %5 | Balance: %6")
-    .arg(id)
-        .arg(QString::fromStdString(secondName))
-        .arg(QString::fromStdString(firstName))
-        .arg(cardNum)
-        .arg(accountNum)
-        .arg(balance);
+    .arg(id).arg(secondName).arg(firstName).arg(cardNum).arg(accountNum).arg(balance);
 }
+
 
 QDebug operator<<(QDebug debug, const Customer& c) {
     QDebugStateSaver saver(debug);
@@ -112,13 +114,13 @@ QDebug operator<<(QDebug debug, const Customer& c) {
     return debug;
 }
 
-std::string Customer::serialize() {
-    return std::to_string(id) + ";" +
-           firstName + ";" +
-           secondName + ";" +
-           std::to_string(cardNum) + ";" +
-           std::to_string(accountNum) + ";" +
-           std::to_string(balance);
+QString Customer::serialize() {
+    return QString("%1;%2;%3;%4;%5;%6")
+    .arg(id)
+        .arg(firstName, secondName)
+        .arg(cardNum)
+        .arg(accountNum)
+        .arg(balance);
 }
 
 

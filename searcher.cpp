@@ -1,9 +1,5 @@
 #include "searcher.h"
-#include "Customer.h"
-#include "Customers.h"
-#include "Searcher.h"
-#include "Customer.h"
-#include "Customers.h"
+
 
 Searcher::Searcher(Customers& customers) : data(customers) {}
 
@@ -29,7 +25,8 @@ std::vector<Customer*> Searcher::searchByID(int minID, int maxID) {
 std::vector<Customer*> Searcher::searchFirstNameStartsWith(char letter) {
     std::vector<Customer*> result;
     for (Customer* c : data.getAll()) {
-        if (!c->getFirstName().empty() && c->getFirstName()[0] == letter) {
+        const QString& name = c->getFirstName();
+        if (!name.isEmpty() && name.at(0).toLower() == QChar(letter).toLower()) {
             result.push_back(c);
         }
     }
@@ -39,7 +36,8 @@ std::vector<Customer*> Searcher::searchFirstNameStartsWith(char letter) {
 std::vector<Customer*> Searcher::searchSecondNameStartsWith(char letter) {
     std::vector<Customer*> result;
     for (Customer* c : data.getAll()) {
-        if (!c->getSecondName().empty() && c->getSecondName()[0] == letter) {
+        const QString& name = c->getSecondName();
+        if (!name.isEmpty() && name.at(0).toLower() == QChar(letter).toLower()) {
             result.push_back(c);
         }
     }
