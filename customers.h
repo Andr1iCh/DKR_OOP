@@ -28,7 +28,8 @@ public:
     void setCustomerAccountNum(int id, int newAccountNum, Logger& logger);
 
     Customer* getByID(int id)const;
-    std::vector<Customer*> getAll();
+    std::vector<Customer*>& getAll();
+    const std::vector<Customer*>& getAll()const;
 
     void copyDataByID(int id1, int id2);
     void removeByID(int id, Logger& logger);

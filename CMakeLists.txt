@@ -52,6 +52,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         customers.h customers.cpp
         sorter.h sorter.cpp
         searcher.h searcher.cpp
+        addcustomerdialog.h addcustomerdialog.cpp addcustomerdialog.ui
+
     )
 
     target_link_libraries(DKR PRIVATE Qt6::Widgets cryptopp::cryptopp)   #

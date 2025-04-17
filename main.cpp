@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
     group.createCustomer("Bob", "Adams", 5555, 6666, 750.25, logger);    // ID 3
     group.createCustomer("Carl", "Smith", 7777, 8888, 200.00, logger);   // ID 4
 
+
     qDebug().noquote() << "Original list:";
     qDebug().noquote() << group;
 
@@ -72,7 +73,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    MainWindow w;
+    MainWindow w(group,logger);
     w.show();
     return a.exec();
 }

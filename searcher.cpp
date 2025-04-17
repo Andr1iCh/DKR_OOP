@@ -95,4 +95,25 @@ std::vector<Customer*> Searcher::searchByBalance(double min, double max) {
     return result;
 }
 
+std::vector<Customer*> Searcher::searchByFirstName(const QString& firstName)
+{
+    std::vector<Customer*> result;
+    for (Customer* c : data.getAll()) {
+        if (c->getFirstName() == firstName) {
+            result.push_back(c);
+        }
+    }
+    return result;
+}
+
+std::vector<Customer*> Searcher::searchBySecondName(const QString& secondName)
+{
+    std::vector<Customer*> result;
+    for (Customer* c : data.getAll()) {
+        if (c->getSecondName() == secondName) {
+            result.push_back(c);
+        }
+    }
+    return result;
+}
 

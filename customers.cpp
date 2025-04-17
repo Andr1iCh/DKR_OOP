@@ -73,7 +73,10 @@ Customer* Customers::getByID(int id)const {
     return nullptr;
 }
 
-std::vector<Customer*> Customers::getAll() {
+std::vector<Customer*>& Customers::getAll() {
+    return customers;
+}
+const std::vector<Customer*>& Customers::getAll()const {
     return customers;
 }
 

@@ -79,26 +79,26 @@ void Customer::setAccountNum(QString newAccountNumStr, Logger& logger) {
 
 
 //Getters
-QString  Customer::getSecondName() {
+QString  Customer::getSecondName()const {
     return secondName;
 }
 
-QString  Customer::getFirstName() {
+QString  Customer::getFirstName()const {
     return firstName;
 }
 
-double Customer::getBalance() {
+double Customer::getBalance()const {
     return balance;
 }
 
-int Customer::getCardNum() {
+int Customer::getCardNum() const{
     return cardNum;
 }
 
-int Customer::getAccountNum() {
+int Customer::getAccountNum() const{
     return accountNum;
 }
-int Customer::getID() {
+int Customer::getID() const{
     return id;
 }
 

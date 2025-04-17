@@ -17,5 +17,7 @@ public:
     std::vector<Customer*> searchByCardNum(int min, int max = -1);
     std::vector<Customer*> searchByAccountNum(int min, int max = -1);
     std::vector<Customer*> searchByBalance(double min, double max = -1.0);
+    std::vector<Customer*> searchByFirstName(const QString& firstName);
+    std::vector<Customer*> searchBySecondName(const QString& secondName);
 };
 #endif // SEARCHER_H

@@ -32,12 +32,12 @@ public:
     void setAccountNum(QString  newAccountNum, Logger& logger);
 
 
-    QString  getSecondName();
-    QString  getFirstName();
-    double getBalance();
-    int getCardNum();
-    int getAccountNum();
-    int getID();
+    QString  getSecondName()const;
+    QString  getFirstName()const;
+    double getBalance()const;
+    int getCardNum()const;
+    int getAccountNum()const;
+    int getID()const;
 
     QString toString() const;
 
