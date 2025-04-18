@@ -31,11 +31,6 @@ int main(int argc, char *argv[])
     qDebug().noquote() << "\nSearch by balance (500-800):";
     for (auto* c : search.searchByBalance(500, 800)) qDebug().noquote() << *c;
 
-    qDebug().noquote() << "\nSearch by first name starts with 'A':";
-    for (auto* c : search.searchFirstNameStartsWith('A')) qDebug().noquote() << *c;
-
-    qDebug().noquote() << "\nSearch by second name starts with 'S':";
-    for (auto* c : search.searchSecondNameStartsWith('S')) qDebug().noquote() << *c;
 
     qDebug().noquote() << "\nSearch by card number (3333):";
     for (auto* c : search.searchByCardNum(3333, -1)) qDebug().noquote() << *c;

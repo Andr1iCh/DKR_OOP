@@ -22,7 +22,7 @@ std::vector<Customer*> Searcher::searchByID(int minID, int maxID) {
     return result;
 }
 
-std::vector<Customer*> Searcher::searchFirstNameStartsWith(char letter) {
+/*std::vector<Customer*> Searcher::searchFirstNameStartsWith(char letter) {
     std::vector<Customer*> result;
     for (Customer* c : data.getAll()) {
         const QString& name = c->getFirstName();
@@ -31,9 +31,9 @@ std::vector<Customer*> Searcher::searchFirstNameStartsWith(char letter) {
         }
     }
     return result;
-}
+}*/
 
-std::vector<Customer*> Searcher::searchSecondNameStartsWith(char letter) {
+/*std::vector<Customer*> Searcher::searchSecondNameStartsWith(char letter) {
     std::vector<Customer*> result;
     for (Customer* c : data.getAll()) {
         const QString& name = c->getSecondName();
@@ -42,7 +42,7 @@ std::vector<Customer*> Searcher::searchSecondNameStartsWith(char letter) {
         }
     }
     return result;
-}
+}*/
 
 std::vector<Customer*> Searcher::searchByCardNum(int min, int max) {
     std::vector<Customer*> result;
@@ -115,5 +115,9 @@ std::vector<Customer*> Searcher::searchBySecondName(const QString& secondName)
         }
     }
     return result;
+}
+
+std::vector<Customer*> Searcher::getAll() {
+    return data.getAll();
 }
 

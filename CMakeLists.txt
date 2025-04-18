@@ -53,6 +53,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         sorter.h sorter.cpp
         searcher.h searcher.cpp
         addcustomerdialog.h addcustomerdialog.cpp addcustomerdialog.ui
+        searchpanel.h searchpanel.cpp searchpanel.ui
 
     )
 

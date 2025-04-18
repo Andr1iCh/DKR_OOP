@@ -10,6 +10,7 @@ private:
 
 public:
     Searcher(Customers& customers);
+    std::vector<Customer*> getAll();
 
     std::vector<Customer*> searchByID(int minID, int maxID = -1);
     std::vector<Customer*> searchFirstNameStartsWith(char letter);

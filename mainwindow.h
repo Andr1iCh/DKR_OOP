@@ -3,6 +3,9 @@
 
 
     #include <QMainWindow>
+    #include "searchpanel.h"
+    #include "searcher.h"
+    #include <QDockWidget>
     class Customers;
     class Logger;
 
@@ -26,6 +29,8 @@
         void on_btnAdd_clicked();
         void onColumnHeaderClicked(int column);
 
+    public slots:
+        void displayFiltered(const std::vector<Customer*>& list);
 
     private:
         Ui::MainWindow *ui;
@@ -41,5 +46,11 @@
 
         int lastSortedColumn = -1;
         Qt::SortOrder lastOrder = Qt::AscendingOrder;
+
+        Searcher searcher;
+        SearchPanel* searchPanel = nullptr;
+        QDockWidget* searchDock = nullptr;
+        void fillTable(const std::vector<Customer*>& list);
+        std::vector<Customer*> currentTableView;
     };
     #endif // MAINWINDOW_H

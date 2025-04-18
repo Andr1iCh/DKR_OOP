@@ -14,18 +14,28 @@
 
 MainWindow::MainWindow(Customers& cust, Logger& log, QWidget* parent)
     : QMainWindow(parent), ui(new Ui::MainWindow),
-    customers(cust), logger(log)
+    customers(cust), logger(log), searcher(customers)
 {
     ui->setupUi(this);
     tableInit();
     fillTable();
     setWindowTitle("CustomerManager");
     setWindowIcon(QIcon("resources/icons/icon.ico"));
+    searchPanel = new SearchPanel(searcher, this);
+    ui->searchContainer->setLayout(new QVBoxLayout);
+    ui->searchContainer->layout()->addWidget(searchPanel);
+
 
     connect(ui->tableWidget, &QTableWidget::cellChanged,
             this,           &MainWindow::onTableCellChanged);
     connect(ui->tableWidget->horizontalHeader(), &QHeaderView::sectionClicked,
             this, &MainWindow::onColumnHeaderClicked);
+    connect(searchPanel, &SearchPanel::filtersApplied, this, &MainWindow::displayFiltered);
+    connect(searchPanel, &SearchPanel::filtersReset, this, [=]() {
+        fillTable();
+    });
+
+
 
 }
 
@@ -60,18 +70,19 @@ void MainWindow::tableInit()
 
 }
 
-void MainWindow::fillTable()
-{
+void MainWindow::fillTable() {
+    fillTable(customers.getAll());
+}
+
+
+
+void MainWindow::fillTable(const std::vector<Customer*>& list) {
+    currentTableView = list;
     ui->tableWidget->blockSignals(true);
-
-    const auto& list = customers.getAll();
-    ui->tableWidget->clear();
+    ui->tableWidget->clearContents();
     ui->tableWidget->setRowCount(static_cast<int>(list.size()));
-    ui->tableWidget->setHorizontalHeaderLabels(
-        {"ID", "First Name", "Second Name", "Card", "Account", "Balance"});
 
-    for (int row = 0; row < list.size(); ++row)
-    {
+    for (int row = 0; row < list.size(); ++row) {
         const Customer* c = list[row];
 
         auto* idItem  = new QTableWidgetItem(QString::number(c->getID()));
@@ -84,13 +95,14 @@ void MainWindow::fillTable()
         for (auto* it : { idItem,fItem,sItem,cardIt,accIt,balIt })
             it->setTextAlignment(Qt::AlignCenter);
 
-        ui->tableWidget->setItem(row,0,idItem);
-        ui->tableWidget->setItem(row,1,fItem);
-        ui->tableWidget->setItem(row,2,sItem);
-        ui->tableWidget->setItem(row,3,cardIt);
-        ui->tableWidget->setItem(row,4,accIt);
-        ui->tableWidget->setItem(row,5,balIt);
+        ui->tableWidget->setItem(row, 0, idItem);
+        ui->tableWidget->setItem(row, 1, fItem);
+        ui->tableWidget->setItem(row, 2, sItem);
+        ui->tableWidget->setItem(row, 3, cardIt);
+        ui->tableWidget->setItem(row, 4, accIt);
+        ui->tableWidget->setItem(row, 5, balIt);
     }
+
     ui->tableWidget->blockSignals(false);
 }
 
@@ -223,7 +235,7 @@ void MainWindow::onColumnHeaderClicked(int columnIndex)
         lastOrder = Qt::AscendingOrder;
     }
 
-    auto& vec = customers.getAll();
+    auto& vec = currentTableView;
 
     switch (columnIndex) {
     case 0: Sorter::_sortByID(vec,            lastOrder == Qt::AscendingOrder);
@@ -244,10 +256,12 @@ void MainWindow::onColumnHeaderClicked(int columnIndex)
     ui->tableWidget->horizontalHeader()
         ->setSortIndicator(columnIndex, lastOrder);
 
-    fillTable();
+    fillTable(currentTableView);
 }
 
-
+void MainWindow::displayFiltered(const std::vector<Customer*>& list) {
+    fillTable(list);
+}
 
 
 
