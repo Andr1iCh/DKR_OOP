@@ -263,5 +263,18 @@ void MainWindow::displayFiltered(const std::vector<Customer*>& list) {
     fillTable(list);
 }
 
+void MainWindow::on_btnDelete_clicked()
+{
+    int row = ui->tableWidget->currentRow();
+    if (row < 0 || row >= static_cast<int>(currentTableView.size()))
+    {
+        return;
+    }
 
+    Customer* c = currentTableView[row];
+    customers.removeByID(c->getID(), logger);
+    currentTableView.erase(currentTableView.begin() + row);
+
+    fillTable(currentTableView);
+}
 

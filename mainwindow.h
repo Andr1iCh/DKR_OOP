@@ -28,6 +28,7 @@
         void onTableCellChanged(int row, int columnIndex);
         void on_btnAdd_clicked();
         void onColumnHeaderClicked(int column);
+        void on_btnDelete_clicked();
 
     public slots:
         void displayFiltered(const std::vector<Customer*>& list);
