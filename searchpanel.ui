@@ -6,19 +6,71 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1018</width>
-    <height>285</height>
+    <width>860</width>
+    <height>250</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#searchPanelRoot {
+    border: 4px solid #4C566A;
+    border-radius: 10px;
+    background-color: #ECEFF4;
+    padding: 10px;
+}
+
+QLineEdit, QSpinBox, QDoubleSpinBox {
+    background-color: white;
+    color: #2E3440;
+    border: 1px solid #D8DEE9;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+QLineEdit:focus, QSpinBox:focus, QDoubleSpinBox:focus {
+    border: 1px solid #5E81AC;
+}
+
+/* 🔸 Кнопки */
+QPushButton {
+    background-color: #5E81AC;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+}
+QPushButton:hover {
+    background-color: #81A1C1;
+}
+QPushButton:pressed {
+    background-color: #2E3440;
+}
+
+/* 📦 Групи */
+QGroupBox {
+    border: 1px solid #D8DEE9;
+    border-radius: 6px;
+    margin-top: 10px;
+    padding: 6px;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    background-color: transparent;
+    color: #5E81AC;
+    padding: 0 5px;
+    font-weight: bold;
+}
+</string>
+  </property>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>720</x>
-     <y>39</y>
-     <width>25</width>
+     <x>660</x>
+     <y>10</y>
+     <width>41</width>
      <height>20</height>
     </rect>
    </property>
@@ -29,9 +81,9 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>818</x>
-     <y>39</y>
-     <width>28</width>
+     <x>758</x>
+     <y>10</y>
+     <width>41</width>
      <height>20</height>
     </rect>
    </property>
@@ -42,10 +94,10 @@
   <widget class="QLabel" name="label_4">
    <property name="geometry">
     <rect>
-     <x>530</x>
-     <y>39</y>
-     <width>78</width>
-     <height>20</height>
+     <x>460</x>
+     <y>0</y>
+     <width>111</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -55,8 +107,8 @@
   <widget class="QPushButton" name="btnApply">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>200</y>
+     <x>10</x>
+     <y>171</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -68,8 +120,8 @@
   <widget class="QPushButton" name="btnReset">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>200</y>
+     <x>140</x>
+     <y>171</y>
      <width>101</width>
      <height>41</height>
     </rect>
@@ -78,11 +130,11 @@
     <string>Reset</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>680</x>
-     <y>66</y>
+     <x>620</x>
+     <y>37</y>
      <width>211</width>
      <height>181</height>
     </rect>
@@ -126,11 +178,11 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>510</x>
-     <y>66</y>
+     <x>450</x>
+     <y>37</y>
      <width>127</width>
      <height>181</height>
     </rect>
@@ -150,11 +202,11 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>66</y>
+     <x>140</x>
+     <y>37</y>
      <width>111</width>
      <height>91</height>
     </rect>
@@ -168,12 +220,12 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>70</y>
-     <width>111</width>
+     <x>290</x>
+     <y>40</y>
+     <width>165</width>
      <height>171</height>
     </rect>
    </property>
@@ -208,12 +260,12 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>90</x>
-     <y>70</y>
-     <width>92</width>
+     <x>0</x>
+     <y>40</y>
+     <width>138</width>
      <height>81</height>
     </rect>
    </property>

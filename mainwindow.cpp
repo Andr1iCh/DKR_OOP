@@ -125,7 +125,7 @@ void MainWindow::resizeEvent(QResizeEvent* event)
 void MainWindow::updateTableFontSize()
 {
     int width = ui->tableWidget->width();
-    int scaledFontSize = std::clamp(width / 50, 10, 25);
+    int scaledFontSize = std::clamp(width / 70, 10, 25);
 
     QFont font = ui->tableWidget->font();
     font.setPointSize(scaledFontSize);

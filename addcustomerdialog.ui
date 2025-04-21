@@ -13,6 +13,59 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">/* Загальний фон і текст */
+QWidget {
+    background-color: #ECEFF4;
+    color: #2E3440;
+    font-family: Segoe UI, sans-serif;
+    font-size: 12pt;
+}
+
+/* Поля вводу */
+QLineEdit {
+    background-color: white;
+    border: 1px solid #D8DEE9;
+    border-radius: 4px;
+    padding: 4px;
+}
+QLineEdit:focus {
+    border: 1px solid #5E81AC;
+}
+
+/* Група (рамка навколо полів) */
+QGroupBox {
+    border: 1px solid #D8DEE9;
+    border-radius: 6px;
+    margin-top: 10px;
+    padding: 6px;
+}
+QGroupBox::title {
+    subcontrol-origin: margin;
+    subcontrol-position: top center;
+    background-color: transparent;
+    color: #5E81AC;
+    padding: 0 5px;
+    font-weight: bold;
+}
+
+/* Кнопки */
+QPushButton {
+    background-color: #5E81AC;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    min-width: 70px;
+}
+QPushButton:hover {
+    background-color: #81A1C1;
+}
+QPushButton:pressed {
+    background-color: #2E3440;
+}
+</string>
+  </property>
   <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
@@ -22,13 +75,13 @@
      <height>331</height>
     </rect>
    </property>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>10</y>
       <width>291</width>
-      <height>305</height>
+      <height>395</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">

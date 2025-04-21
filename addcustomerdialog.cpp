@@ -12,7 +12,7 @@ AddCustomerDialog::AddCustomerDialog(QWidget* parent)
     ui(new Ui::AddCustomerDialog)
 {
     ui->setupUi(this);
-
+     setWindowTitle("Add customer");
     auto* nameVal = new QRegularExpressionValidator(
         QRegularExpression("^[A-Za-zА-Яа-яЁёЇїІіЄєҐґ]+$"), this);
     ui->lineFirstName ->setValidator(nameVal);
