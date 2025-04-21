@@ -263,18 +263,56 @@ void MainWindow::displayFiltered(const std::vector<Customer*>& list) {
     fillTable(list);
 }
 
+bool shouldDelete(Customer* c, const std::vector<int>& idsToDelete) {
+    for (int id : idsToDelete) {
+        if (c->getID() == id)
+            return true;
+    }
+    return false;
+}
+
 void MainWindow::on_btnDelete_clicked()
 {
-    int row = ui->tableWidget->currentRow();
-    if (row < 0 || row >= static_cast<int>(currentTableView.size()))
-    {
+    QList<QModelIndex> selectedRows = ui->tableWidget->selectionModel()->selectedRows();
+
+    if (selectedRows.isEmpty())
         return;
+
+    std::vector<int> idsToDelete;
+    for (const QModelIndex& index : selectedRows) {
+        int row = index.row();
+        if (row >= 0 && row < static_cast<int>(currentTableView.size())) {
+            idsToDelete.push_back(currentTableView[row]->getID());
+        }
     }
 
-    Customer* c = currentTableView[row];
-    customers.removeByID(c->getID(), logger);
-    currentTableView.erase(currentTableView.begin() + row);
+    // Delete from currentTableView
+    std::vector<Customer*> updatedView;
+    for (Customer* c : currentTableView) {
+        if (!shouldDelete(c, idsToDelete)) {
+            updatedView.push_back(c);
+        }
+    }
 
+    // Delete from Customers
+    for (int id : idsToDelete) {
+        customers.removeByID(id, logger);
+    }
+
+    currentTableView = updatedView;
     fillTable(currentTableView);
 }
 
+void MainWindow::on_btnEncrypt_clicked()
+{
+    customers.saveEncrypted("customers.enc",logger);
+    QMessageBox::information(this, "Success", "Encrypted file saved as customers.enc");
+
+}
+
+void MainWindow::on_btnLoad_clicked()
+{
+    customers.loadDecrypted("customers.enc", logger);
+    fillTable();
+    ui->statusbar->showMessage("Decrypted data loaded from customers.enc", 3000);
+}

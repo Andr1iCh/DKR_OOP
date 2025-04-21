@@ -1,57 +1,63 @@
-    #ifndef MAINWINDOW_H
-    #define MAINWINDOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
+#include <QMainWindow>
+#include <vector>
 
-    #include <QMainWindow>
-    #include "searchpanel.h"
-    #include "searcher.h"
-    #include <QDockWidget>
-    class Customers;
-    class Logger;
+#include "searchpanel.h"
+#include "searcher.h"
 
-    QT_BEGIN_NAMESPACE
-    namespace Ui {
-    class MainWindow;
-    }
-    QT_END_NAMESPACE
+class Customers;
+class Logger;
+class Customer;
 
-    class MainWindow : public QMainWindow
-    {
-        Q_OBJECT
+QT_BEGIN_NAMESPACE
+namespace Ui {
+class MainWindow;
+}
+QT_END_NAMESPACE
 
-    public:
-        explicit MainWindow(Customers& customers,Logger& log, QWidget *parent = nullptr);
-        ~MainWindow();
+class MainWindow : public QMainWindow
+{
+    Q_OBJECT
 
-    private slots:
-        //void on_btnShow_clicked();
-        void onTableCellChanged(int row, int columnIndex);
-        void on_btnAdd_clicked();
-        void onColumnHeaderClicked(int column);
-        void on_btnDelete_clicked();
+public:
+    explicit MainWindow(Customers& customers, Logger& logger, QWidget *parent = nullptr);
+    ~MainWindow();
 
-    public slots:
-        void displayFiltered(const std::vector<Customer*>& list);
+public slots:
+    void displayFiltered(const std::vector<Customer*>& list);
 
-    private:
-        Ui::MainWindow *ui;
+private slots:
+    void onTableCellChanged(int row, int columnIndex);
+    void on_btnAdd_clicked();
+    void on_btnDelete_clicked();
+    void onColumnHeaderClicked(int column);
+    void on_btnEncrypt_clicked();
+    void on_btnLoad_clicked();
 
-        Customers& customers;
-        Logger& logger;
+protected:
+    void resizeEvent(QResizeEvent* event) override;
 
-        void resizeEvent(QResizeEvent* event) override;
-        void updateTableFontSize();
+private:
+    Ui::MainWindow *ui;
 
-        void tableInit();
-        void fillTable();
+    Customers& customers;
+    Logger& logger;
 
-        int lastSortedColumn = -1;
-        Qt::SortOrder lastOrder = Qt::AscendingOrder;
+    std::vector<Customer*> currentTableView;
 
-        Searcher searcher;
-        SearchPanel* searchPanel = nullptr;
-        QDockWidget* searchDock = nullptr;
-        void fillTable(const std::vector<Customer*>& list);
-        std::vector<Customer*> currentTableView;
-    };
-    #endif // MAINWINDOW_H
+    Searcher searcher;
+    SearchPanel* searchPanel = nullptr;
+    QDockWidget* searchDock = nullptr;
+
+    int lastSortedColumn = -1;
+    Qt::SortOrder lastOrder = Qt::AscendingOrder;
+
+    void tableInit();
+    void fillTable();
+    void fillTable(const std::vector<Customer*>&);
+    void updateTableFontSize();
+};
+
+#endif // MAINWINDOW_H
